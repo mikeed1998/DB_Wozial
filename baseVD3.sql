@@ -7,7 +7,7 @@ CREATE TABLE Tarea(
 	nombre_usuario       VARCHAR(50)      NOT NULL,
 	fecha_inicio         VARCHAR(10)      NOT NULL,
 	fecha_vencimiento    VARCHAR(10)      NOT NULL,
-	estatus        		   BOOLEAN          NOT NULL
+	estatus        		 BOOLEAN          NOT NULL
 );
 
 CREATE TABLE Empresa(
@@ -91,6 +91,12 @@ INNER JOIN Tarea AS t
 WHERE u.id_tarea = t.id AND u.nombre = t.nombre_usuario
 GROUP BY t.nombre_usuario
 HAVING COUNT(t.nombre_usuario) < 5;
+
+
+
+
+
+
 
 
 
