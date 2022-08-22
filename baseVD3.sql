@@ -67,22 +67,7 @@ INSERT INTO Usuario(id, nombre, id_tarea) VALUES(8, "User2", 8);
 INSERT INTO Usuario(id, nombre, id_tarea) VALUES(9, "User3", 9);
 INSERT INTO Usuario(id, nombre, id_tarea) VALUES(10, "User3", 10);
 
-
-SELECT u.nombre, COUNT(t.nombre_usuario)
-FROM Usuario AS u
-INNER JOIN Tarea AS t 
-WHERE u.id_tarea = t.id AND u.nombre = t.nombre_usuario
-GROUP BY t.nombre_usuario;
-
-/*
-SELECT e.nombre, u.nombre
-FROM Empresa AS e
-INNER JOIN Tarea AS t
-INNER JOIN Usuario AS u
-WHERE e.id_tarea = t.id AND u.id_tarea = t.id
-AND (e.id_tarea = t.id AND t.estatus = 0);
-*/
-/*
+/* Tareas pendientes agrupadas por empresas con su usuaio seleccionado */
 SELECT e.nombre, t.nombre, t.estatus, u.nombre
 FROM Empresa AS e
 INNER JOIN Tarea AS t
@@ -90,12 +75,22 @@ INNER JOIN Usuario AS u
 WHERE e.id_tarea = t.id
 AND u.id_tarea = t.id
 AND t.estatus != 1;
-*/
-/*
-SELECT *
-FROM Tarea
-WHERE estatus = 0;
-*/
+
+/* Empresas con mas tareas pendientes */
+SELECT e.nombre, COUNT(t.estatus)
+FROM Empresa AS e
+INNER JOIN Tarea AS t
+WHERE e.id_tarea = t.id AND t.estatus = 0
+GROUP BY e.nombre
+HAVING COUNT(t.estatus);
+
+/* Usuarios que no tienen el máximo de tareas asignadas ( < 5) */
+SELECT u.nombre, COUNT(t.nombre_usuario)
+FROM Usuario AS u
+INNER JOIN Tarea AS t 
+WHERE u.id_tarea = t.id AND u.nombre = t.nombre_usuario
+GROUP BY t.nombre_usuario
+HAVING COUNT(t.nombre_usuario) < 5;
 
 
 
